@@ -7,12 +7,39 @@ def listar_tarefas(request):
     tarefas = Tarefa.objects.filter(usuario=request.user)
     return render(request, 'tarefas/lista.html', {'tarefas': tarefas})
 
+import PyPDF2
+from django.shortcuts import render, redirect
+
+def extrair_resumo_pdf(arquivo):
+    leitor = PyPDF2.PdfReader(arquivo)
+    texto_completo = ""
+    # Lê as primeiras 3 páginas para não sobrecarregar
+    for pagina in leitor.pages[:3]:
+        texto_completo += pagina.extract_text()
+    
+    # Aqui você poderia integrar com uma API de IA. 
+    # Por enquanto, faremos um resumo básico das primeiras linhas:
+    resumo_gerado = texto_completo[:500] + "..." 
+    return resumo_gerado
+
 @login_required
 def criar_tarefa(request):
     if request.method == 'POST':
         titulo = request.POST.get('titulo')
         descricao = request.POST.get('descricao')
-        Tarefa.objects.create(usuario=request.user, titulo=titulo, descricao=descricao)
+        pdf = request.FILES.get('arquivo_pdf') # Pega o arquivo
+        
+        resumo = ""
+        if pdf:
+            resumo = extrair_resumo_pdf(pdf)
+
+        Tarefa.objects.create(
+            usuario=request.user, 
+            titulo=titulo, 
+            descricao=descricao,
+            arquivo_pdf=pdf,
+            resumo=resumo
+        )
         return redirect('listar_tarefas')
     return render(request, 'tarefas/form.html')
 

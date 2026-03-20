@@ -122,3 +122,6 @@ STATIC_URL = 'static/'
 LOGIN_REDIRECT_URL = 'listar_tarefas'
 LOGOUT_REDIRECT_URL = 'login'
 LOGIN_URL = 'login' # Redireciona para aqui se tentar acessar algo restrito sem estar logado
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

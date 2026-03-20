@@ -7,6 +7,9 @@ class Tarefa(models.Model):
     descricao = models.TextField(blank=True, null=True)
     concluida = models.BooleanField(default=False)
     criado_em = models.DateTimeField(auto_now_add=True)
+    arquivo_pdf = models.FileField(upload_to='pdfs/', null=True, blank=True)
+    resumo = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.titulo
+

@@ -1,0 +1,40 @@
+{% extends 'tarefas/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">{% if tarefa %}Editar{% else %}Nova{% endif %} Tarefa</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label font-weight-bold">Título da Tarefa</label>
+                        <input type="text" name="titulo" id="titulo" class="form-control" 
+                               placeholder="Ex: Estudar Django MVT" required 
+                               value="{{ tarefa.titulo|default:'' }}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="descricao" class="form-label font-weight-bold">Descrição (Opcional)</label>
+                        <textarea name="descricao" id="descricao" class="form-control" rows="4" 
+                                  placeholder="Detalhes sobre a tarefa...">{{ tarefa.descricao|default:'' }}</textarea>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'listar_tarefas' %}" class="btn btn-outline-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-success px-4">Salvar Tarefa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="text-center mt-3">
+            <small class="text-muted">A tarefa será vinculada ao usuário: <strong>{{ user.username }}</strong></small>
+        </div>
+    </div>
+</div>
+{% endblock %}

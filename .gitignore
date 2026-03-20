@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes Virtuais (VENV)
+venv/
+env/
+ENV/
+.venv/
+
+# Configurações de Segurança (CRÍTICO)
+.env
+db.sqlite3
+*.log
+
+# Pastas de IDEs (VS Code, PyCharm)
+.vscode/
+.idea/
+
+# Arquivos de Sistema
+.DS_Store
+Thumbs.db
+
+# Django especificidades
+local_settings.py
+staticfiles/
+media/

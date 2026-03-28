@@ -87,8 +87,9 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST'),
         'PORT': os.environ.get('DB_PORT'),
         'OPTIONS': {
-            'ssl': {},  # Isso força o MySQLdb a iniciar uma conexão segura
-        },
+    'ssl': {'ca': None}, 
+    'charset': 'utf8mb4',
+}
     }
 }
 # Password validation

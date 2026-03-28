@@ -75,7 +75,9 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+import os
 
+# No topo do arquivo, verifique se está lendo as variáveis corretamente
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -83,10 +85,10 @@ DATABASES = {
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'PORT': os.environ.get('DB_PORT'),
         'OPTIONS': {
-            'ssl': {'ca': None}, 
-        }
+            'ssl': {},  # Isso força o MySQLdb a iniciar uma conexão segura
+        },
     }
 }
 # Password validation

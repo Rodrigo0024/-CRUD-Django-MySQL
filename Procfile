@@ -1,0 +1,1 @@
+web: gunicorn sistema_web_django.wsgi

@@ -63,3 +63,30 @@ def cadastrar(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/cadastro.html', {'form': form})
+
+
+@login_required
+def editar_tarefa(request, id):
+
+    tarefa = get_object_or_404(Tarefa, id=id, usuario=request.user)
+
+    if request.method == 'POST':
+        tarefa.titulo = request.POST.get('titulo')
+        tarefa.descricao = request.POST.get('descricao')
+        
+        novo_pdf = request.FILES.get('arquivo_pdf')
+        if novo_pdf:
+            tarefa.arquivo_pdf = novo_pdf
+            tarefa.resumo = extrair_resumo_pdf(novo_pdf) 
+
+        tarefa.save()
+        return redirect('listar_tarefas')
+
+    return render(request, 'tarefas/form.html', {'tarefa': tarefa})
+
+
+@login_required
+def deletar_tarefa(request, id):
+    tarefa = get_object_or_404(Tarefa, id=id, usuario=request.user)
+    tarefa.delete()
+    return redirect('listar_tarefas')

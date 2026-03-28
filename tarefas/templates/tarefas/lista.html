@@ -27,7 +27,7 @@
                             
                             {% if tarefa.resumo %}
                                 <div class="mt-3 p-2 bg-light rounded border-start border-4 border-primary">
-                                    <small class="fw-bold d-block mb-1 text-primary"><i class="bi bi-cpu"></i> Previa do pdf
+                                    <small class="fw-bold d-block mb-1 text-primary"><i class="bi bi-cpu"></i> Previa do pdf</small>
                                     <p class="small mb-0 text-dark italic" style="font-style: italic;">"{{ tarefa.resumo }}"</p>
                                 </div>
                             {% endif %}
@@ -42,10 +42,17 @@
                                 <span class="text-muted small italic">Sem anexo</span>
                             {% endif %}
 
-                            <div class="btn-group">
-                                <a href="{% url 'deletar_tarefa' tarefa.id %}" class="btn btn-sm btn-link text-danger p-0" onclick="return confirm('Excluir tarefa?')">
-                                    <i class="bi bi-trash fs-5"></i>
+                            <div class="btn-group gap-2">
+                                <a href="{% url 'editar_tarefa' tarefa.id %}" class="btn btn-sm btn-link text-secondary p-0" title="Editar">
+                                    <i class="bi bi-pencil-square fs-5"></i>
                                 </a>
+
+                                <form action="{% url 'deletar_tarefa' tarefa.id %}" method="POST" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-link text-danger p-0 border-0" onclick="return confirm('Excluir tarefa?')" title="Excluir">
+                                        <i class="bi bi-trash fs-5"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
